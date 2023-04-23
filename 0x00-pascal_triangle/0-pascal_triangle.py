@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """ ALX interview 1 - Pascal Triangle """
 
 
