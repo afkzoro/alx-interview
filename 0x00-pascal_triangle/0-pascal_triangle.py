@@ -6,10 +6,10 @@ def pascal_triangle(n):
     """_summary_
 
     Args:
-        n (int): integer to convert to Pascal Triangle
+        n (int): number of rows in Pascal Triangle
 
     Returns:
-        list: a list containing Pascal Triangle of int n
+        list: a list containing Pascal Triangle of int row n
     """
 
     if n <= 0:
