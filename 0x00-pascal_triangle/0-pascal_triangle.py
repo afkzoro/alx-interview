@@ -11,6 +11,7 @@ def pascal_triangle(n):
     Returns:
         list: a list containing Pascal Triangle of int n
     """
+
     if n <= 0:
         return []
 
@@ -21,4 +22,4 @@ def pascal_triangle(n):
             row.append(P_triangle[i-1][j-1] + P_triangle[i-1][j])
         row.append(1)
         P_triangle.append(row)
-    return [' '.join(str(num) for num in row) for row in P_triangle]
+    return [''.join(str(num) for num in row) for row in P_triangle]
