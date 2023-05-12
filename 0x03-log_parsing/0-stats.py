@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" A python log parser that reads stdin line by line and computes metrics """
 import sys
 import re
 
