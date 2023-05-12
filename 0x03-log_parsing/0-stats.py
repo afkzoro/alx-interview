@@ -51,7 +51,7 @@ try:
             print()
 
 except KeyboardInterrupt:
-    # Handle keyboard interruption (CTRL + C)
+    #  Handle keyboard interruption (CTRL + C)
     # print("File size:", total_size)
     # for code in sorted(status_counts.keys()):
     #    print(f"{code}: {status_counts[code]}")
