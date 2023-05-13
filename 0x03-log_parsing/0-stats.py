@@ -1,7 +1,13 @@
 #!/usr/bin/python3
-""" A python log parser that reads stdin line by line and computes metrics
-Input format: <IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status
-<file size> (if the format is not this one, the line must be skipped)
+"""
+Metrics Computation Module
+
+This module reads log lines from stdin, computes various metrics,
+and prints the statistics based on the log lines.
+
+The log lines are expected to have the following format:
+<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
+
 """
 import sys
 import re
