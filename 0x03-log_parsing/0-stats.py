@@ -13,9 +13,8 @@ import sys
 import re
 
 
-def compute_metrics():
-    """
-    Compute Metrics
+def compute_metrics(input_stream):
+    """ Compute Metrics
 
     Reads log lines from stdin, computes the total file size,
     and counts the occurrences of each status code.
@@ -23,6 +22,8 @@ def compute_metrics():
     Prints the statistics after every 10 lines and the final statistics
     when the program stops or encounters an exception.
 
+    Args:
+        input_stream (log): logs generated and piped as stdin
     """
 
     # Initialize variables
@@ -35,7 +36,7 @@ def compute_metrics():
 
     try:
         # Process each line from stdin
-        for line in sys.stdin:
+        for line in input_stream:
             line = line.strip()
 
             # Check if the line matches the desired format
@@ -80,4 +81,4 @@ def compute_metrics():
 # Check if the module is run as a standalone script
 if __name__ == '__main__':
     # Call the function to start computing metrics
-    compute_metrics()
+    compute_metrics(sys.stdin)
