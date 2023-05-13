@@ -9,7 +9,14 @@ import re
 
 def compute_metrics():
     """
-    A python log parser that reads stdin line by line and computes metrics
+    Compute Metrics
+
+    Reads log lines from stdin, computes the total file size,
+    and counts the occurrences of each status code.
+
+    Prints the statistics after every 10 lines and the final statistics
+    when the program stops or encounters an exception.
+
     """
 
     # Initialize variables
@@ -64,4 +71,7 @@ def compute_metrics():
         sys.exit(0)
 
 
-compute_metrics()
+# Check if the module is run as a standalone script
+if __name__ == '__main__':
+    # Call the function to start computing metrics
+    compute_metrics()
