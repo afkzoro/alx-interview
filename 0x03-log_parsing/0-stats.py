@@ -11,9 +11,10 @@ The log lines are expected to have the following format:
 """
 import sys
 import re
+from typing import TextIO
 
 
-def compute_metrics(input_stream):
+def compute_metrics(input_stream: TextIO) -> None:
     """ Compute Metrics
 
     Reads log lines from stdin, computes the total file size,
