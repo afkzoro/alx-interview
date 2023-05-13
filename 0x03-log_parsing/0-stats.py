@@ -23,7 +23,7 @@ def compute_metrics(input_stream):
     when the program stops or encounters an exception.
 
     Args:
-        input_stream (log): logs generated and piped as stdin
+        input_stream (log): logs generated
     """
 
     # Initialize variables
@@ -68,7 +68,7 @@ def compute_metrics(input_stream):
                 print("File size:", total_size)
                 for code in sorted(status_counts.keys()):
                     print(f"{code}: {status_counts[code]}")
-                print()
+                # print()
 
     except KeyboardInterrupt:
         #   Handle keyboard interruption (CTRL + C)
