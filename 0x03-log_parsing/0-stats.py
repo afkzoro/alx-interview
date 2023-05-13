@@ -14,7 +14,7 @@ import re
 from typing import TextIO
 
 
-def compute_metrics(input_stream: TextIO) -> None:
+def compute_metrics(input_stream: TextIO) -> None:  # noqa
     """ Compute Metrics
 
     Reads log lines from stdin, computes the total file size,
