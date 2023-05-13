@@ -36,6 +36,13 @@ def compute_metrics(input_stream: TextIO) -> None:
     reg = r'^(\S+) - \[(.+)\] "GET \/projects\/\d+ HTTP\/\d.\d" (\d+) (\d+)$'
 
     try:
+        """sumary_line
+
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+
         # Process each line from stdin
         for line in input_stream:
             line = line.strip()
@@ -50,16 +57,24 @@ def compute_metrics(input_stream: TextIO) -> None:
 
             # Update total file size
             try:
+                """_summary_
+    """
                 file_size = int(file_size)
                 total_size += file_size
             except ValueError:
+                """_summary_
+    """
                 continue
 
             # Update status code counts
             try:
+                """_summary_
+    """
                 stat_code = int(stat_code)
                 status_counts[stat_code] = status_counts.get(stat_code, 0) + 1
             except ValueError:
+                """_summary_
+    """
                 continue
 
             line_number += 1
@@ -72,6 +87,8 @@ def compute_metrics(input_stream: TextIO) -> None:
                 # print()
 
     except KeyboardInterrupt:
+        """_summary_
+    """
         #   Handle keyboard interruption (CTRL + C)
         #  print("File size:", total_size)
         #  for code in sorted(status_counts.keys()):
@@ -81,5 +98,7 @@ def compute_metrics(input_stream: TextIO) -> None:
 
 # Check if the module is run as a standalone script
 if __name__ == '__main__':
+    """_summary_
+    """
     # Call the function to start computing metrics
     compute_metrics(sys.stdin)
