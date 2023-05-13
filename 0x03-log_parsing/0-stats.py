@@ -6,53 +6,62 @@ Input format: <IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status
 import sys
 import re
 
-# Initialize variables
-total_size = 0
-status_counts = {}
-line_number = 0
 
-# Regular expression pattern for matching the desired input format
-pattern = r'^(\S+) - \[(.+)\] "GET \/projects\/\d+ HTTP\/\d.\d" (\d+) (\d+)$'
+def compute_metrics():
+    """
+    A python log parser that reads stdin line by line and computes metrics
+    """
 
-try:
-    # Process each line from stdin
-    for line in sys.stdin:
-        line = line.strip()
+    # Initialize variables
+    total_size = 0
+    status_counts = {}
+    line_number = 0
 
-        # Check if the line matches the desired format
-        match = re.match(pattern, line)
-        if not match:
-            continue
+    # Regular expression pattern for matching the desired input format
+    reg = r'^(\S+) - \[(.+)\] "GET \/projects\/\d+ HTTP\/\d.\d" (\d+) (\d+)$'
 
-        # Parse the matched groups from the line
-        ip_address, date, status_code, file_size = match.groups()
+    try:
+        # Process each line from stdin
+        for line in sys.stdin:
+            line = line.strip()
 
-        # Update total file size
-        try:
-            file_size = int(file_size)
-            total_size += file_size
-        except ValueError:
-            continue
+            # Check if the line matches the desired format
+            match = re.match(reg, line)
+            if not match:
+                continue
 
-        # Update status code counts
-        try:
-            status_code = int(status_code)
-            status_counts[status_code] = status_counts.get(status_code, 0) + 1
-        except ValueError:
-            continue
+            # Parse the matched groups from the line
+            ip_address, date, stat_code, file_size = match.groups()
 
-        line_number += 1
+            # Update total file size
+            try:
+                file_size = int(file_size)
+                total_size += file_size
+            except ValueError:
+                continue
 
-        # Print statistics after every 10 lines
-        if line_number % 10 == 0:
-            print("File size:", total_size)
-            for code in sorted(status_counts.keys()):
-                print(f"{code}: {status_counts[code]}")
-            print()
+            # Update status code counts
+            try:
+                stat_code = int(stat_code)
+                status_counts[stat_code] = status_counts.get(stat_code, 0) + 1
+            except ValueError:
+                continue
 
-except KeyboardInterrupt:
-    #  Handle keyboard interruption (CTRL + C)
-    # print("File size:", total_size)
-    # for code in sorted(status_counts.keys()):
-    #    print(f"{code}: {status_counts[code]}")
-    sys.exit(0)
+            line_number += 1
+
+            # Print statistics after every 10 lines
+            if line_number % 10 == 0:
+                print("File size:", total_size)
+                for code in sorted(status_counts.keys()):
+                    print(f"{code}: {status_counts[code]}")
+                print()
+
+    except KeyboardInterrupt:
+        #   Handle keyboard interruption (CTRL + C)
+        #  print("File size:", total_size)
+        #  for code in sorted(status_counts.keys()):
+        #     print(f"{code}: {status_counts[code]}")
+        sys.exit(0)
+
+
+compute_metrics()
