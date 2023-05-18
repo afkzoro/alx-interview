@@ -33,15 +33,15 @@ dict_status_code = {"200": 0,
 
 try:
     for line in sys.stdin:
-        parsed_line = line.split()  # ✄ trimming
-        parsed_line = parsed_line[::-1]  # inverting
+        parsed_line = line.split()
+        parsed_line = parsed_line[::-1]
 
         if len(parsed_line) > 2:
             count += 1
 
             if count <= 10:
-                file_size_total += int(parsed_line[0])  # file size
-                code = parsed_line[1]  # status code
+                file_size_total += int(parsed_line[0])
+                code = parsed_line[1]
 
                 if (code in dict_status_code.keys()):
                     dict_status_code[code] += 1
