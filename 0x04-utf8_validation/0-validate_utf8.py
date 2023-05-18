@@ -31,7 +31,7 @@ def validUTF8(data):
                     return False
             elif (byte >> 3) == 0b11110:
                 num_continuation_bytes = 3
-                if byte >> 2 == 0b111100:
+                if byte >> 2 == 0b1111000:
                     return False
             else:
                 return False
