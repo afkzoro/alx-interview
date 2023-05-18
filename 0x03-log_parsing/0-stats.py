@@ -3,12 +3,14 @@
 import sys
 
 
-def print_msg(dict_sc, total_file_size):
-    """_summary_
+def print_stats(dict_sc, total_file_size):
+    """Prints the statistics
 
     Args:
-        dict_sc (_type_): _description_
-        total_file_size (_type_): _description_
+        dict_sc (Dict): A dictionary containing the counts of
+        each status code
+
+        total_file_size (Int): The total file size
     """
 
     print("File size: {}".format(total_file_size))
@@ -45,8 +47,8 @@ try:
                     dict_status_code[code] += 1
 
             if (count == 10):
-                print_msg(dict_status_code, file_size_total)
+                print_stats(dict_status_code, file_size_total)
                 count = 0
 
 finally:
-    print_msg(dict_status_code, file_size_total)
+    print_stats(dict_status_code, file_size_total)
