@@ -1,12 +1,10 @@
 #!/usr/bin/python3
-""" ALX-interview 5 N-Queens """
 import sys
 
 
 def is_safe(board, row, col):
-    """ checks if it's safe to
-    place a queen at that position(row, column)
-    """
+    # Check if a queen can be placed at board[row][col]
+
     for i in range(col):
         if (board[i] == row or board[i] == row + col - i
                 or board[i] == row - col + i):
@@ -16,8 +14,6 @@ def is_safe(board, row, col):
 
 
 def solve_nqueens(N):
-    """ Initializes the chest board and list of solutions
-    """
     board = [-1] * N
     solutions = []
     solve_util(board, 0, N, solutions)
@@ -25,9 +21,6 @@ def solve_nqueens(N):
 
 
 def solve_util(board, col, N, solutions):
-    """ recursive helper function that finds
-    all possible solutions for the N-queens using backtracking
-    """
     # Base case: all queens are placed
     if col == N:
         solutions.append(board[:])
@@ -43,8 +36,6 @@ def solve_util(board, col, N, solutions):
 
 
 def print_solutions(solutions):
-    """ Prints the list of solutions
-    """
     for solution in solutions:
         solution_list = [[row, solution[row]] for row in range(len(solution))]
         print(solution_list)
@@ -52,8 +43,6 @@ def print_solutions(solutions):
 
 
 def main():
-    """ handles the command line arguments
-    """
     # Check if the correct number of arguments is provided
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
