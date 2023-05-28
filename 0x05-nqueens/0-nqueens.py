@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" ALX-interview 5 N-Queens """
 import sys
 
 
