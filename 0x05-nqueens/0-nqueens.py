@@ -6,15 +6,15 @@ def is_safe(board, row, col):
     # Check if a queen can be placed at board[row][col]
 
     for i in range(col):
-        if (board[i] == row or board[i] == row + col - i
-                or board[i] == row - col + i):
+        if (board[i] == row or board[i] == row + col
+                - i or board[i] == row - col + i):
             return False
 
     return True
 
 
 def solve_nqueens(N):
-    board = [ - 1 ] * N
+    board = [-1] * N
     solutions = []
     solve_util(board, 0, N, solutions)
     return solutions
