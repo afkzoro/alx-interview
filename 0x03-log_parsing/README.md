@@ -36,6 +36,6 @@ If a line does not adhere to this format, it will be skipped.
 Provide the input log lines through stdin. You can either type the log lines manually or redirect input from a file:
 
 bash
-Copy code
-python log_metrics_calculator.py < log_file.txt
+
+python 0-stats.py < log_file.txt
 The script will process the input lines and calculate the metrics. It will print statistics every 10 lines and also when you interrupt the script using CTRL + C.
