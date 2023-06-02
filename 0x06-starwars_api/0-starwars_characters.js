@@ -21,7 +21,7 @@ async function getCharacterNames (movieId) {
 // Main function
 async function main () {
   try {
-    const movieId = process.argv[2];
+    const movieId = process.argv[1];
     if (!movieId) {
       console.error('Usage: node star_wars_characters.js <movieId>');
       process.exit(1);
