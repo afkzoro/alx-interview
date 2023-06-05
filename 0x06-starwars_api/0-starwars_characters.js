@@ -1,41 +1,84 @@
 #!/usr/bin/node
-const axios = require('axios');
+/* eslint-disable semi */
+const request = require('request');
 
 // Function to fetch character names from the Star Wars API
-async function getCharacterNames (movieId) {
-  try {
-    const response = await axios.get(`https://swapi.dev/api/films/${movieId}/`);
-    const { characters } = response.data;
+function getCharacterNames (movieId) {
+  return new Promise((resolve, reject) => {
+    const url = `https://swapi.dev/api/films/${movieId}/`;
 
-    const characterNames = await Promise.all(characters.map(async (characterUrl) => {
-      const characterResponse = await axios.get(characterUrl);
-      return characterResponse.data.name;
-    }));
+    request.get(url, (error, response, body) => {
+      if (error) {
+        reject(new Error('Failed to fetch movie details.'))
+        return;
+      }
 
-    return characterNames;
-  } catch (error) {
-    throw new Error('Failed to fetch character names.');
-  }
+      if (response.statusCode !== 200) {
+        reject(new Error('Failed to fetch movie details. Invalid response.'));
+        return;
+      }
+
+      try {
+        const data = JSON.parse(body);
+        const characterUrls = data.characters;
+        const characterNames = [];
+
+        // Function to fetch character name from character URL
+        const fetchCharacterName = (characterUrl) => {
+          return new Promise((resolve, reject) => {
+            request.get(characterUrl, (error, response, body) => {
+              if (error) {
+                reject(new Error('Failed to fetch character details.'));
+                return;
+              }
+
+              if (response.statusCode !== 200) {
+                reject(new Error('Failed to fetch character details. Invalid response.'));
+                return;
+              }
+
+              const characterData = JSON.parse(body);
+              resolve(characterData.name);
+            });
+          });
+        };
+
+        // Fetch character names asynchronously
+        const fetchPromises = characterUrls.map((characterUrl) => fetchCharacterName(characterUrl));
+
+        Promise.all(fetchPromises)
+          .then((names) => {
+            resolve(names);
+          })
+          .catch((error) => {
+            reject(new Error('Failed to fetch character names.'));
+          });
+      } catch (error) {
+        reject(new Error('Failed to parse response data.'));
+      }
+    });
+  });
 }
 
 // Main function
-async function main () {
-  try {
-    const movieId = process.argv[1];
-    if (!movieId) {
-      console.error('Usage: node star_wars_characters.js <movieId>');
-      process.exit(1);
-    }
-
-    const characterNames = await getCharacterNames(movieId);
-
-    characterNames.forEach((name) => {
-      console.log(name);
-    });
-  } catch (error) {
-    console.error(error.message);
+function main () {
+  const movieId = process.argv[2];
+  if (!movieId) {
+    console.error('Usage: node ./0-starwars_characters.js <movieId>');
     process.exit(1);
   }
+
+  getCharacterNames(movieId)
+    .then((characterNames) => {
+      console.log(`Characters in Star Wars Movie #${movieId}:`);
+      characterNames.forEach((name) => {
+        console.log(name);
+      });
+    })
+    .catch((error) => {
+      console.error(error.message);
+      process.exit(1);
+    });
 }
 
 main();
