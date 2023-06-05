@@ -69,7 +69,6 @@ function main () {
 
   getCharacterNames(movieId)
     .then((characterNames) => {
-      console.log(`Characters in Star Wars Movie #${movieId}:`);
       characterNames.forEach((name) => {
         console.log(name);
       });
