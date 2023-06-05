@@ -1,5 +1,3 @@
-#!/usr/bin/node
-/* eslint-disable semi */
 const request = require('request');
 
 // Function to fetch character names from the Star Wars API
@@ -7,7 +5,7 @@ function getCharacterNames (movieId) {
   return new Promise((resolve, reject) => {
     const url = `https://swapi.dev/api/films/${movieId}/`;
 
-    request.get(url, (error, response, body) => {
+    request.get(url, async (error, response, body) => {
       if (error) {
         reject(new Error('Failed to fetch movie details.'));
         return;
@@ -21,6 +19,7 @@ function getCharacterNames (movieId) {
       try {
         const data = JSON.parse(body);
         const characterUrls = data.characters;
+        const characterNames = [];
 
         // Function to fetch character name from character URL
         const fetchCharacterName = (characterUrl) => {
@@ -43,15 +42,17 @@ function getCharacterNames (movieId) {
         };
 
         // Fetch character names asynchronously
-        const fetchPromises = characterUrls.map((characterUrl) => fetchCharacterName(characterUrl));
-
-        Promise.all(fetchPromises)
-          .then((names) => {
-            resolve(names);
-          })
-          .catch((error) => {
+        for (const characterUrl of characterUrls) {
+          try {
+            const characterName = await fetchCharacterName(characterUrl);
+            characterNames.push(characterName);
+          } catch (error) {
             reject(new Error('Failed to fetch character names.'));
-          });
+            return;
+          }
+        }
+
+        resolve(characterNames);
       } catch (error) {
         reject(new Error('Failed to parse response data.'));
       }
@@ -60,23 +61,22 @@ function getCharacterNames (movieId) {
 }
 
 // Main function
-function main () {
+async function main () {
   const movieId = process.argv[2];
   if (!movieId) {
     console.error('Usage: node ./0-starwars_characters.js <movieId>');
     process.exit(1);
   }
 
-  getCharacterNames(movieId)
-    .then((characterNames) => {
-      characterNames.forEach((name) => {
-        console.log(name);
-      });
-    })
-    .catch((error) => {
-      console.error(error.message);
-      process.exit(1);
+  try {
+    const characterNames = await getCharacterNames(movieId);
+    characterNames.forEach((name) => {
+      console.log(name);
     });
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
 }
 
 main();
