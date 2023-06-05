@@ -21,7 +21,7 @@ function getCharacterNames (movieId) {
       try {
         const data = JSON.parse(body);
         const characterUrls = data.characters;
-        const characterNames = [];
+        // const characterNames = [];
 
         // Function to fetch character name from character URL
         const fetchCharacterName = (characterUrl) => {
@@ -70,7 +70,6 @@ function main () {
 
   getCharacterNames(movieId)
     .then((characterNames) => {
-      console.log(`Characters in Star Wars Movie #${movieId}:`);
       characterNames.forEach((name) => {
         console.log(name);
       });
