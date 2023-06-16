@@ -11,16 +11,22 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
+    # Initialize an dynamic programming array
+    # to store the fewest number of coins needed for each total
+
     dp = [float('inf')] * (total + 1)
     dp[0] = 0
 
-    coins.sort(reverse=True)  # Sort coins in descending order
-
+    # Iterate through all possible totals from 1 to 'total'
     for i in range(1, total + 1):
+        # Iterate through all available coin denominations
         for coin in coins:
-            if coin <= i:
-                dp[i] = min(dp[i], dp[i - coin] + 1)
-            else:
-                break  # No need to consider smaller coins since they won't fit
+            if i - coin >= 0:
 
+                # Update the fewest number of coins needed
+                # if using this coin leads to a smaller value
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+
+    # If the fewest number of coins for the total is still infinity
+    # it means the total cannot be met
     return dp[total] if dp[total] != float('inf') else -1
