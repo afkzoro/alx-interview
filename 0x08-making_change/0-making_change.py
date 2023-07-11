@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-import time
 """ Fewest Coins """
+import time
 
 
 def makeChange(coins, total):
